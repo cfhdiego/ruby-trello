@@ -31,7 +31,7 @@ module Trello
       def authorize(request)
         the_uri = Addressable::URI.parse(request.uri)
         existing_values = the_uri.query_values.nil? ? {} : the_uri.query_values
-        new_values = { key: @developer_public_key, token: @member_token }
+        new_values = { :key => @developer_public_key, :token => @member_token }
         the_uri.query_values = new_values.merge existing_values
 
         Request.new request.verb, the_uri, request.headers, request.body
