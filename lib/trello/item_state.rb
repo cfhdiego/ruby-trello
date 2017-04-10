@@ -8,7 +8,7 @@ module Trello
   # @!attribute [r] item_id
   #   @return [String]
   class CheckItemState < BasicData
-    register_attributes :id, :state, :item_id, readonly: [ :id, :state, :item_id ]
+    register_attributes :id, :state, :item_id, :readonly => [ :id, :state, :item_id ]
     validates_presence_of :id, :item_id
 
     # Update the fields of an item state.

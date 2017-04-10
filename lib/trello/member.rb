@@ -18,10 +18,10 @@ module Trello
   # @!attribute [r] url
   #   @return [String]
   class Member < BasicData
-    register_attributes :id, :username, :email, :full_name, :initials, :avatar_id, :bio, :url, readonly: [ :id, :username, :avatar_id, :url ]
+    register_attributes :id, :username, :email, :full_name, :initials, :avatar_id, :bio, :url, :readonly => [ :id, :username, :avatar_id, :url ]
     validates_presence_of :id, :username
-    validates_length_of   :full_name, minimum: 4
-    validates_length_of   :bio,       maximum: 16384
+    validates_length_of   :full_name, :minimum => 4
+    validates_length_of   :bio,       :maximum => 16384
 
     include HasActions
 
@@ -55,7 +55,7 @@ module Trello
     # Valid values for options are:
     #   :large (170x170)
     #   :small (30x30)
-    def avatar_url(options = { size: :large })
+    def avatar_url(options = { :size => :large })
       size = options[:size] == :small ? 30 : 170
       "https://trello-avatars.s3.amazonaws.com/#{avatar_id}/#{size}.png"
     end
@@ -67,7 +67,7 @@ module Trello
     #   :filter => [ :none, :members, :organization, :public, :open, :closed, :all ] # default: :all
     # i.e.,
     #    me.boards(:filter => :closed) # retrieves all closed boards
-    many :boards, filter: :all
+    many :boards, :filter => :all
 
     # Returns a list of cards the member is assigned to.
     #
@@ -76,7 +76,7 @@ module Trello
     #    :filter => [ :none, :open, :closed, :all ] # default :open
     # i.e.,
     #    me.cards(:filter => :closed) # retrieves all closed cards
-    many :cards, filter: :open
+    many :cards, :filter => :open
 
     # Returns a list of the organizations this member is a part of.
     #
@@ -85,7 +85,7 @@ module Trello
     #   :filter => [ :none, :members, :public, :all ] # default: all
     # i.e.,
     #    me.organizations(:filter => :public) # retrieves all public organizations
-    many :organizations, filter: :all
+    many :organizations, :filter => :all
 
     # Returns a list of notifications for the user
     many :notifications
@@ -99,8 +99,8 @@ module Trello
 
     def update!
       client.put(request_prefix, {
-        fullName: full_name,
-        bio: bio
+        :fullName => full_name,
+        :bio => bio
       }).json_into(self)
     end
 

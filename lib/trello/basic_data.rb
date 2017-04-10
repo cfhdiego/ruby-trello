@@ -102,7 +102,7 @@ module Trello
       Trello.client
     end
 
-    register_attributes :id, readonly: [ :id ]
+    register_attributes :id, :readonly => [ :id ]
 
     attr_writer :client
 

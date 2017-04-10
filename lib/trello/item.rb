@@ -12,7 +12,7 @@ module Trello
   # @!attribute [r] pos
   #   @return [Object]
   class Item < BasicData
-    register_attributes :id, :name, :type, :state, :pos, readonly: [ :id, :name, :type, :state, :pos ]
+    register_attributes :id, :name, :type, :state, :pos, :readonly => [ :id, :name, :type, :state, :pos ]
     validates_presence_of :id, :type
 
     # Updates the fields of an item.

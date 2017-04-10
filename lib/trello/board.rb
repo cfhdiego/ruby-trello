@@ -18,10 +18,10 @@ module Trello
   #   @return [Hash] A 24-character hex string
   class Board < BasicData
     register_attributes :id, :name, :description, :closed, :starred, :url, :organization_id, :prefs,
-      readonly: [ :id, :url ]
+      :readonly => [ :id, :url ]
     validates_presence_of :id, :name
-    validates_length_of   :name,        in: 1..16384
-    validates_length_of   :description, maximum: 16384
+    validates_length_of   :name,        :in => 1..16384
+    validates_length_of   :description, :maximum => 16384
 
     include HasActions
 
@@ -60,9 +60,9 @@ module Trello
     def save
       return update! if id
 
-      fields = { name: name }
-      fields.merge!(desc: description) if description
-      fields.merge!(idOrganization: organization_id) if organization_id
+      fields = { :name => name }
+      fields.merge!(:desc => description) if description
+      fields.merge!(:idOrganization => organization_id) if organization_id
       fields.merge!(flat_prefs)
 
       client.post("/boards", fields).json_into(self)
@@ -75,11 +75,11 @@ module Trello
       @changed_attributes.clear
 
       fields = {
-        name: attributes[:name],
-        description: attributes[:description],
-        closed: attributes[:closed],
-        starred: attributes[:starred],
-        idOrganization: attributes[:organization_id]
+        :name => attributes[:name],
+        :description => attributes[:description],
+        :closed => attributes[:closed],
+        :starred => attributes[:starred],
+        :idOrganization => attributes[:organization_id]
       }
       fields.merge!(flat_prefs)
 
@@ -122,7 +122,7 @@ module Trello
     # Add a member to this Board.
     #    type => [ :admin, :normal, :observer ]
     def add_member(member, type = :normal)
-      client.put("/boards/#{self.id}/members/#{member.id}", { type: type })
+      client.put("/boards/#{self.id}/members/#{member.id}", { :type => type })
     end
 
     # Remove a member of this Board.
@@ -135,14 +135,14 @@ module Trello
     # This method, when called, can take a hash table with a filter key containing any
     # of the following values:
     #    :filter => [ :none, :open, :closed, :all ] # default :open
-    many :cards, filter: :open
+    many :cards, :filter => :open
 
     # Returns all the lists on this board.
     #
     # This method, when called, can take a hash table with a filter key containing any
     # of the following values:
     #    :filter => [ :none, :open, :closed, :all ] # default :open
-    many :lists, filter: :open
+    many :lists, :filter => :open
 
     # Returns an array of members who are associated with this board.
     #
@@ -152,7 +152,7 @@ module Trello
     many :members, filter: :all
 
     # Returns a reference to the organization this board belongs to.
-    one :organization, path: :organizations, using: :organization_id
+    one :organization, :path => :organizations, :using => :organization_id
 
     many :labels
 

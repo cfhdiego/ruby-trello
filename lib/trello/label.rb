@@ -8,16 +8,16 @@ module Trello
   #   @return [String]
   class Label < BasicData
     register_attributes :id, :name, :board_id, :uses,
-      readonly: [ :id, :uses, :board_id ]
+      :readonly => [ :id, :uses, :board_id ]
     validates_presence_of :id, :uses, :board_id, :name
-    validates_length_of   :name,        in: 1..16384
+    validates_length_of   :name,        :in => 1..16384
 
     SYMBOL_TO_STRING = {
-      id: 'id',
-      name: 'name',
-      board_id: 'idBoard',
-      color: 'color',
-      uses: 'uses'
+      :id => 'id',
+      :name => 'name',
+      :board_id => 'idBoard',
+      :color => 'color',
+      :uses => 'uses'
     }
 
     class << self
@@ -71,7 +71,7 @@ module Trello
     end
 
     # Returns a reference to the board this label is currently connected.
-    one :board, path: :boards, using: :board_id
+    one :board, :path => boards, :using => :board_id
 
     # Saves a record.
     def save
@@ -79,9 +79,9 @@ module Trello
       return update! if id
 
       client.post("/labels", {
-        name:   name,
-        color:   color,
-        idBoard: board_id,
+        :name =>   name,
+        :color =>   color,
+        :idBoard => board_id,
       }).json_into(self)
     end
 

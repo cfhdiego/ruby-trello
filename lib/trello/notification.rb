@@ -14,7 +14,7 @@ module Trello
   #   @return [String]
   class Notification < BasicData
     register_attributes :id, :unread, :type, :date, :data, :member_creator_id,
-      read_only: [ :id, :unread, :type, :date, :member_creator_id ]
+      :read_only => [ :id, :unread, :type, :date, :member_creator_id ]
     validates_presence_of :id, :type, :date, :member_creator_id
 
     class << self
@@ -36,7 +36,7 @@ module Trello
 
     alias :unread? :unread
 
-    one :member_creator, path: :members, via: Member, using: :member_creator_id
+    one :member_creator, :path => :members, :via => Member, :using => :member_creator_id
 
     def board
       client.get("/notifications/#{id}/board").json_into(Board)

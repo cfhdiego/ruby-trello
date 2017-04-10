@@ -100,8 +100,8 @@ module Trello
           request.headers = {"Authorization" => get_auth_header(request.uri, :get)}
           request
         else
-          consumer(return_url: return_url, callback_method: :postMessage)
-          request_token = consumer.get_request_token(oauth_callback: return_url)
+          consumer(:return_url => return_url, :callback_method => :postMessage)
+          request_token = consumer.get_request_token(:oauth_callback => return_url)
           callback.call request_token
           return nil
         end
@@ -151,12 +151,12 @@ module Trello
 
       def consumer_params(params = {})
         {
-          scheme: :header,
-          scope: 'read,write,account',
-          http_method: :get,
-          request_token_path: "https://trello.com/1/OAuthGetRequestToken",
-          authorize_path: "https://trello.com/1/OAuthAuthorizeToken",
-          access_token_path: "https://trello.com/1/OAuthGetAccessToken"
+          :scheme => :header,
+          :scope => 'read,write,account',
+          :http_method => :get,
+          :request_token_path => "https://trello.com/1/OAuthGetRequestToken",
+          :authorize_path => "https://trello.com/1/OAuthAuthorizeToken",
+          :access_token_path => "https://trello.com/1/OAuthGetAccessToken"
         }.merge!(params)
       end
 
