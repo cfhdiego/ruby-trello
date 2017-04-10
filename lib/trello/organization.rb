@@ -14,7 +14,7 @@ module Trello
   class Organization < BasicData
     register_attributes :id, :name, :display_name, :description, :url, :invited,
       :website, :logo_hash, :billable_member_count, :active_billable_member_count,
-      readonly: [ :id, :name, :display_name, :description, :url, :invited,
+      :readonly => [ :id, :name, :display_name, :description, :url, :invited,
         :website, :logo_hash, :billable_member_count, :active_billable_member_count ]
     validates_presence_of :id, :name
 
